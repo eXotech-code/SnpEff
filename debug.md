@@ -1,7 +1,7 @@
 # Debug doc for database creation using the reference genome of _Chrysocyon brachyurus_
 
 ## Problem
-When running the database build script downloading chromosomes on Chrysocyon brachyurus chromosome assembly
+When running the database build script on Chrysocyon brachyurus chromosome assembly
 (use the provided script at `scripts/chryusocyon.sh`) it fails with the following error message:
 
 ```
