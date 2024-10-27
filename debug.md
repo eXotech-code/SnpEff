@@ -33,6 +33,10 @@ The 1s in the length column are misleading because they could mean two things.
 The values for this column are just outputs `snpeff.interval.interval.Interval.size()`
 (see [Ideas#1](#ideas))
 
+The `setEnd` and `setStart` methods of the `Interval` class are not invoked at all which leads
+me to think that we never actually modify the size of the chromosome. This could mean that
+we're treating the chromosomes as empty from some very early moment after creating their
+instances.
 
 ## Ideas
 ### 1. See usage of `snpeff.interval.interval.Interval.size()`
@@ -56,6 +60,14 @@ from `config.getGenome()` are actually just init values.
 ### 2. Set breakpoint in the `Chromosome` constructor
 ```
 stop at org.snpeff.interval.Chromosome.<init>
+```
+
+### 3. See whether the `setEnd` or `setStart` methods of the `Interval` class are invoked
+If they are not invoked, this means that we never detect any coding (?) sequences in the chromosome.
+
+```
+stop at org.snpeff.interval.Interval:116
+stop at org.snpeff.interval.Interval:158
 ```
 
 
