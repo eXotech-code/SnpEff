@@ -9,7 +9,7 @@ When running the database build script downloading chromosomes on Chrysocyon bra
 FATAL ERROR: Most Exons do not have sequences!
 ```
 
-Before this happens we get messagees saying that no exons have been created:
+Before this happens we get messages saying that no exons have been created:
 
 ```
 00:00:20 Chromosome: 'CM052494.1'       length: 25851948
@@ -28,6 +28,17 @@ Before this happens we get messagees saying that no exons have been created:
 ## Ideas
 Set breakpoint at snpeff.interval.interval.Interval:258 (in `size()`) and check the stack
 trace each time this method is called. Also check whether the returned value is > 1.
+The intializer values for `start` and `end` properties of the `Interval` class
+are both `-1` and the size is computed this way:
+
+```java
+public int size() {
+    return end - start + 1;
+}
+```
+
+So `1` could be either the initializer value or it could mean that something in the `Genome`
+contructor didn't find any (coding?) sequence in the chromosome.
 If this is called > 1 times, that would probably mean that the first values that we get
 in `org.snpeff.snpEffect.factory.SnpEffPredictorFactory.<init>` when we stringify value
 from `config.getGenome()` are actually just init values.
